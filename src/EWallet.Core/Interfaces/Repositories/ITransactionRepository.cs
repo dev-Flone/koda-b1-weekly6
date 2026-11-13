@@ -5,7 +5,7 @@ namespace EWallet.Core.Interfaces.Repositories;
 
 public interface ITransactionRepository
 {
-    Task<int> CreateAsync(Transaction transaction, SqlConnection connection, SqlTransaction dbTransaction);
-    Task<int> CreateAsync(Transaction transaction);
-    Task<List<Transaction>> GetByUserIdAsync(int userId);
+    Task<int> CreateAsync(Transactions transaction, SqlConnection connection, SqlTransaction dbTransaction);
+    Task<int> CreateAsync(Transactions transaction);
+    Task<List<Transactions>> GetByUserIdAsync(int userId);
 }

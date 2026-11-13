@@ -11,7 +11,7 @@ public class TransactionHistoryViewModel
 
 public class TransactionHistoryItem
 {
-    public Transaction Transactions { get; set; } = null!;
+    public Transactions Transactions { get; set; } = null!;
     public bool IsIncome { get; set; }
     public string Direction => IsIncome ? "Income" : "Expense";
 }

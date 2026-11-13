@@ -25,6 +25,10 @@ SELECT name AS ObjectName,
 FROM   sys.objects
 WHERE  type IN ('U', 'V'); -- 'U' = User Table, 'V' = View
 
+SELECT table_name
+FROM   information_schema.tables
+WHERE  table_type = 'BASE TABLE';
+
 SELECT *
 FROM   Users;
 
@@ -33,3 +37,22 @@ FROM   Wallets;
 
 SELECT *
 FROM   Transactions;
+
+SELECT *
+FROM   WalletMutations;
+
+SELECT *
+FROM   PaymentMethods;
+
+SELECT *
+FROM   TopUpRequests;
+
+SELECT *
+FROM   AuditLogs;
+
+-- Reset DATABASE
+DROP TABLE Transactions;
+
+DROP TABLE Wallets;
+
+DROP TABLE Users;

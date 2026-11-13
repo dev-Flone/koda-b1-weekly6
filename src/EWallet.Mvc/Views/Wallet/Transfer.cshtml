@@ -4,9 +4,9 @@
 @{
     ViewData["Title"] = "Transfer";
 
-    var user = ViewBag.User as EWallet.Core.Models.User;
-    var wallet = ViewBag.Wallet as EWallet.Core.Models.Wallet;
-    var recipients = ViewBag.Recipients as List<EWallet.Core.Models.User>;
+    var user = ViewBag.User as EWallet.Core.Models.Users;
+    var wallet = ViewBag.Wallet as EWallet.Core.Models.Wallets;
+    var recipients = ViewBag.Recipients as List<EWallet.Core.Models.Users>;
 
     var rupiah = (CultureInfo)CultureInfo.GetCultureInfo("id-ID").Clone();
     rupiah.NumberFormat.CurrencySymbol = "Rp ";

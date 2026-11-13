@@ -4,8 +4,8 @@ namespace EWallet.Core.Interfaces.Services;
 
 public interface IUserService
 {
-    Task<List<User>> GetAllAsync();
-    Task<User?> GetByIdAsync(int id);
-    Task<int> CreateAsync(User user);
-    Task<bool> UpdateAsync(User user);
+    Task<List<Users>> GetAllAsync();
+    Task<Users?> GetByIdAsync(int id);
+    Task<int> CreateAsync(Users user);
+    Task<bool> UpdateAsync(Users user);
 }

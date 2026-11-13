@@ -1,0 +1,10 @@
+namespace EWallet.Core.Enums;
+
+public enum AuditLogAction
+{
+    CREATE, UPDATE, DELETE,
+    LOGIN, LOGOUT,
+    TOPUP, TRANSFER,
+    FREEZEWALLET, UNFREEZEWALLET,
+    SUSPENDEDUSER, ACTIVEUSER
+}

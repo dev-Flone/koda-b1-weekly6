@@ -1,5 +1,5 @@
 @using System.Globalization
-@model EWallet.Core.Models.Wallet
+@model EWallet.Core.Models.Wallets
 
 @{
     ViewData["Title"] = "Wallet Dashboard";
@@ -8,7 +8,7 @@
     var rupiah = (CultureInfo)CultureInfo.GetCultureInfo("id-Id").Clone();
     rupiah.NumberFormat.CurrencySymbol = "Rp. ";
 
-    var user = ViewBag.User as EWallet.Core.Models.User;
+    var user = ViewBag.User as EWallet.Core.Models.Users;
     var displayName = string.IsNullOrWhiteSpace(user?.Name) ? "there" : user!.Name;
     var balance = Model.Balance.ToString("C", rupiah);
 

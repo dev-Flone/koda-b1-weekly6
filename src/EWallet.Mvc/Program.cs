@@ -4,15 +4,16 @@ using EWallet.Core.Interfaces.Repositories;
 using EWallet.Core.Interfaces.Services;
 using EWallet.Core.Repositories;
 using EWallet.Core.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-builder.Services.AddSingleton<IDbConnectionFactory>(new DbConnectionFactory(connectionString));
+// builder.Services.AddSingleton<IDbConnectionFactory>(new DbConnectionFactory(connectionString));
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -23,6 +24,11 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWalletService, WalletService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+
+// EF-Core
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 
