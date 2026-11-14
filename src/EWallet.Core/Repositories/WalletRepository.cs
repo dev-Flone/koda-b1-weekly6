@@ -1,48 +1,61 @@
 using EWallet.Core.Data;
-using EWallet.Core.Interfaces.Data;
-using EWallet.Core.Interfaces.Repositories;
+using EWallet.Core.Enums;
+using EWallet.Core.Repositories.Interfaces;
 using EWallet.Core.Models;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace EWallet.Core.Repositories;
 
 public class WalletRepository(AppDbContext context) : IWalletRepository
 {
-    private readonly AppDbContext _context = context;
-
-    public Task<bool> AddBalanceAsync(int walletId, decimal amount, SqlConnection connection, SqlTransaction transaction)
+    public async Task<List<Wallets>> GetAllAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Wallets.AsNoTracking().ToListAsync(cancellationToken);
     }
 
-    public Task<int> CreateAsync(Wallets wallet, SqlConnection connection, SqlTransaction transaction)
+    public async Task<Wallets?> GetByIdAsync(long id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Wallets.FirstOrDefaultAsync(w => w.Id == id, cancellationToken);
     }
 
-    public Task<bool> DebitBalanceAsync(int walletId, decimal amount, SqlConnection connection, SqlTransaction transaction)
+    public async Task<Wallets?> GetByStatus(WalletStatus status, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Wallets.FirstOrDefaultAsync(w => w.Status == status, cancellationToken);
     }
 
-    public Task<Wallets?> GetByIdAsync(int id)
+    public async Task<Wallets?> GetByUserId(long userId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Wallets.FirstOrDefaultAsync(w => w.UserId == userId, cancellationToken);
     }
 
-    public Task<Wallets?> GetByUserIdAsync(int userId)
+    public async Task<Wallets?> GetByWalletNumberAsync(string walletNumber, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Wallets.FirstOrDefaultAsync(w => w.WalletNumber == walletNumber, cancellationToken);
     }
 
-    public Task<bool> UpdateBalanceAsync(int walletId, decimal balance)
+
+    // EXISTS
+    public async Task<bool> ExistsByWalletNumber(string walletNumber, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Wallets.AnyAsync(w => w.WalletNumber == walletNumber, cancellationToken);
     }
 
-    public Task<bool> UpdateBalanceAsync(int walletId, decimal balance, SqlConnection connection, SqlTransaction transaction)
+
+    // METHODS
+    public async Task AddAsync(Wallets wallet, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await context.Wallets.AddAsync(wallet, cancellationToken);
     }
+
+    public void Update(Wallets wallet)
+    {
+        context.Wallets.Update(wallet);
+    }
+
+    public void Delete(Wallets wallet)
+    {
+        context.Remove(wallet);
+    }
+
+
 }

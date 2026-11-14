@@ -1,6 +1,6 @@
 using EWallet.Core.Data;
 using EWallet.Core.Interfaces.Data;
-using EWallet.Core.Interfaces.Repositories;
+using EWallet.Core.Repositories.Interfaces;
 using EWallet.Core.Interfaces.Services;
 using EWallet.Core.Models;
 using Microsoft.EntityFrameworkCore;

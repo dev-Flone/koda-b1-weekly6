@@ -1,11 +1,10 @@
 using EWallet.Api.Handlers;
 using EWallet.Core.Data;
-using EWallet.Core.Interfaces.Repositories;
 using EWallet.Core.Interfaces.Services;
-using EWallet.Core.Repositories;
 using EWallet.Core.Seeding;
 using EWallet.Core.Services;
 using Microsoft.EntityFrameworkCore;
+using EWallet.Core.DepedencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,15 +38,13 @@ builder.Services.AddDbContext<AppDbContext>(options => options
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
-// Repositories
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IWalletRepository, WalletRepository>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-
 // Services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWalletService, WalletService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+
+// DI Repositories
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 

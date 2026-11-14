@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EWallet.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261114104107_FinalTable")]
+    [Migration("20261114130754_FinalTable")]
     partial class FinalTable
     {
         /// <inheritdoc />

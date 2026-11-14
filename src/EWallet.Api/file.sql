@@ -64,9 +64,32 @@ FROM   TopUpRequests;
 SELECT *
 FROM   AuditLogs;
 
+SELECT (SELECT COUNT(*)
+        FROM   Transactions) AS TotalTransactions,
+       (SELECT COUNT(*)
+        FROM   AuditLogs) AS TotalAuditLogs;
+
+SELECT ReferenceNo,
+       Id,
+       Status
+FROM   Transactions
+WHERE  ReferenceNo LIKE 'SEED-%';
+
 -- Reset DATABASE
-DROP TABLE Transactions;
+BEGIN TRANSACTION;
 
-DROP TABLE Wallets;
+DELETE AuditLogs;
 
-DROP TABLE Users;
+DELETE WalletMutations;
+
+DELETE TopUpRequests;
+
+DELETE Transactions;
+
+DELETE Wallets;
+
+DELETE PaymentMethods;
+
+DELETE Users;
+
+COMMIT TRANSACTION;

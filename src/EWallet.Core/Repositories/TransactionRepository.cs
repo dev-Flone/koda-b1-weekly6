@@ -1,29 +1,71 @@
 using EWallet.Core.Data;
 using EWallet.Core.Enums;
-using EWallet.Core.Interfaces.Data;
-using EWallet.Core.Interfaces.Repositories;
 using EWallet.Core.Models;
-using Microsoft.Data.SqlClient;
+using EWallet.Core.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace EWallet.Core.Repositories;
 
 public class TransactionRepository(AppDbContext context) : ITransactionRepository
 {
-    private readonly AppDbContext _context = context;
-
-    public Task<int> CreateAsync(Transactions transaction, SqlConnection connection, SqlTransaction dbTransaction)
+    public async Task<List<Transactions>> GetAllAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Transactions
+                .AsNoTracking()
+                .OrderByDescending(t => t.CreatedAtUtc)
+                .ToListAsync(cancellationToken);
     }
 
-    public Task<int> CreateAsync(Transactions transaction)
+    public async Task<Transactions?> GetByIdAsync(long id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Transactions.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
     }
 
-    public Task<List<Transactions>> GetByUserIdAsync(int userId)
+    public async Task<Transactions?> GetByReferenceNoAsync(string referenceNo, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Transactions.FirstOrDefaultAsync(t => t.ReferenceNo == referenceNo, cancellationToken);
     }
+
+    public async Task<List<Transactions>> GetByWalletId(long walletId, CancellationToken cancellationToken)
+    {
+        return await context.Transactions
+                .AsNoTracking()
+                .Where(t => t.SenderWalletId == walletId || t.ReceiverWalletId == walletId)
+                .OrderByDescending(t => t.CreatedAtUtc)
+                .ToListAsync(cancellationToken);
+    }
+
+    public async Task<List<Transactions>> GetByStatusAsync(TransactionStatus status, CancellationToken cancellationToken)
+    {
+        return await context.Transactions
+                .AsNoTracking()
+                .Where(t => t.Status == status)
+                .OrderByDescending(t => t.CreatedAtUtc)
+                .ToListAsync(cancellationToken);
+    }
+
+    public async Task<List<Transactions>> GetByTypeAsync(TransactionType type, CancellationToken cancellationToken)
+    {
+        return await context.Transactions.AsNoTracking().Where(t => t.Type == type).OrderByDescending(t => t.CreatedAtUtc).ToListAsync(cancellationToken);
+    }
+
+
+    // EXISTS
+    public async Task<bool> ExistsByReferenceNoAsync(string referenceNo, CancellationToken cancellationToken)
+    {
+        return await context.Transactions.AnyAsync(t => t.ReferenceNo == referenceNo, cancellationToken);
+    }
+
+
+    // METHODS
+    public async Task AddAsync(Transactions transaction, CancellationToken cancellationToken)
+    {
+        await context.Transactions.AddAsync(transaction, cancellationToken);
+    }
+
+    public void Update(Transactions transaction)
+    {
+        context.Transactions.Update(transaction);
+    }
+
 }

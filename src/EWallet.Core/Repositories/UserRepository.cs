@@ -1,48 +1,60 @@
 using EWallet.Core.Data;
-using EWallet.Core.Interfaces.Data;
-using EWallet.Core.Interfaces.Repositories;
+using EWallet.Core.Repositories.Interfaces;
 using EWallet.Core.Models;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace EWallet.Core.Repositories;
 
-public class UserRepository(AppDbContext context) : IUserRepository
+public sealed class UserRepository(AppDbContext context) : IUserRepository
 {
-    private readonly AppDbContext _context = context;
-
-    public Task<int> CreateAsync(Users user)
+    public async Task<List<Users>> GetAllAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Users.AsNoTracking().ToListAsync(cancellationToken);
     }
 
-    public Task<int> CreateAsync(Users user, SqlConnection connection, SqlTransaction transaction)
+    public async Task<Users?> GetByEmailAsync(string email, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
     }
 
-    public Task<bool> EmailExistsAsync(string email)
+    public async Task<Users?> GetByIdAsync(long id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
 
-    public Task<bool> EmailExistsAsync(string email, int excludeUserId)
+    public async Task<Users?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Users.FirstOrDefaultAsync(u => u.UserName == username, cancellationToken);
     }
 
-    public Task<List<Users>> GetAllAsync()
+
+    // Exists    
+    public async Task<bool> ExistsByUsernameAsync(string username, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Users.AnyAsync(u => u.UserName == username, cancellationToken);
     }
 
-    public Task<Users?> GetByIdAsync(int id)
+    public async Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await context.Users.AnyAsync(u => u.Email == email, cancellationToken);
     }
 
-    public Task<bool> UpdateAsync(Users user)
+
+
+    // METHODS
+    public async Task AddAsync(Users user, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await context.Users.AddAsync(user, cancellationToken);
     }
+
+    public void Update(Users user)
+    {
+        context.Users.Update(user);
+    }
+
+    public void Delete(Users user)
+    {
+        context.Users.Remove(user);
+    }
+
 }
