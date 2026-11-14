@@ -31,7 +31,7 @@ public sealed class Users(string userName, string fullName, string email, string
     public UserStatus Status { get; private set; } = UserStatus.ACTIVE;
 
     [Required]
-    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow;
+    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow.AddHours(7);
 
     public DateTime? UpdatedAtUtc { get; private set; }
 

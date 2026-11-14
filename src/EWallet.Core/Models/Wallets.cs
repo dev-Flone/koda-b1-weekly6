@@ -26,7 +26,7 @@ public class Wallets(long userId, string walletNumber, decimal balance)
     public byte[] RowVersion { get; private set; } = null!;
 
     [Required]
-    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow;
+    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow.AddHours(7);
 
     public DateTime? UpdatedAtUtc { get; private set; }
 

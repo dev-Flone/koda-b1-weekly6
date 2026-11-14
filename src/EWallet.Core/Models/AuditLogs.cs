@@ -19,7 +19,7 @@ public sealed class AuditLogs
     [Required] public AuditLogOutcome Outcome { get; private set; }
     [StringLength(500)] public string? Description { get; private set; }
     [StringLength(100)] public string? CorrelationId { get; private set; }
-    [Required] public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow;
+    [Required] public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow.AddHours(7);
 
     // Relationship
     public Users? User { get; private set; } = null!;

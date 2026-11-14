@@ -1,38 +1,39 @@
 using EWallet.Api.Handlers;
 using EWallet.Core.Data;
-using EWallet.Core.Interfaces.Data;
 using EWallet.Core.Interfaces.Repositories;
 using EWallet.Core.Interfaces.Services;
 using EWallet.Core.Repositories;
+using EWallet.Core.Seeding;
 using EWallet.Core.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// Swagger ApiDocs
 builder.Services.AddSwaggerGen();
 
-
-// var connectionString = builder.Configuration
-//     .GetConnectionString("DefaultConnection")
-//     ?? throw new InvalidOperationException(
-//         "Connection string 'DefaultConnection' not found."
-//     );
-
-// builder.Services.AddSingleton<IDbConnectionFactory>(
-//     new DbConnectionFactory(connectionString)
-// );
+builder.Services.AddControllers();
 
 // EF-Core
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connectionstring : Not yet configure.");
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddDbContext<AppDbContext>(options => options
+    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    .UseSeeding((context, _) =>
+        {
+            UserSeedData.Seed(context);
+            WalletSeedData.Seed(context);
+            PaymentMethodSeedData.Seed(context);
+            TransactionSeedData.Seed(context);
+        }
+    )
+    .UseAsyncSeeding(async (context, _, ct) =>
+        {
+            await UserSeedData.SeedAsync(context, ct);
+            await WalletSeedData.SeedAsync(context, ct);
+            await PaymentMethodSeedData.SeedAsync(context, ct);
+            await TransactionSeedData.SeedAsync(context, ct);
+        }
+    )
+    );
 
 // Handler
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -49,6 +50,13 @@ builder.Services.AddScoped<IWalletService, WalletService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 var app = builder.Build();
+
+// Database initialization
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await db.Database.MigrateAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

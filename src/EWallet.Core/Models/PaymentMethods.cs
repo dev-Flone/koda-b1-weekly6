@@ -3,26 +3,26 @@ using EWallet.Core.Enums;
 
 namespace EWallet.Core.Models;
 
-public sealed class PaymentMethods(int id, string name, bool isActive)
+public sealed class PaymentMethods(PaymentMethodCode code, string name, string? providerName, bool isActive)
 {
-    public int Id { get; private set; } = id;
+    public int Id { get; private set; }
 
     [StringLength(30)]
-    public PaymentMethodCode Code { get; private set; }
+    public PaymentMethodCode Code { get; private set; } = code;
 
     [Required]
     [StringLength(100)]
     public string Name { get; private set; } = name;
 
     [StringLength(100)]
-    public string? ProviderName { get; private set; }
+    public string? ProviderName { get; private set; } = providerName;
 
     [Required]
     public bool IsActive { get; private set; } = isActive;
 
     [Required]
-    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow;
+    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow.AddHours(7);
 
     // Relationship
-    public ICollection<TopUpRequests> TopUpRequests { get; private set; } = null!;
+    public ICollection<TopUpRequests> TopUpRequests { get; private set; } = [];
 }

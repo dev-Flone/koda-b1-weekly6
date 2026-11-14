@@ -20,6 +20,12 @@
 --        TABLE_TYPE
 -- FROM   INFORMATION_SCHEMA.TABLES;
 -- -- T-SQL System Views Query
+SELECT COUNT(*) AS TotalUsers
+FROM   dbo.Users;
+
+SELECT COUNT(*) AS TotalWallets
+FROM   dbo.Wallets;
+
 SELECT name AS ObjectName,
        type_desc AS ObjectType
 FROM   sys.objects
@@ -28,6 +34,14 @@ WHERE  type IN ('U', 'V'); -- 'U' = User Table, 'V' = View
 SELECT table_name
 FROM   information_schema.tables
 WHERE  table_type = 'BASE TABLE';
+
+DBCC CHECKIDENT ('Users', RESEED, 0);
+
+DELETE Users;
+
+DBCC CHECKIDENT ('Wallets', RESEED, 0);
+
+DELETE Wallets;
 
 SELECT *
 FROM   Users;

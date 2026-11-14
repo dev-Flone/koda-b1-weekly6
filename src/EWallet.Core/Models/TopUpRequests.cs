@@ -3,7 +3,7 @@ using EWallet.Core.Enums;
 
 namespace EWallet.Core.Models;
 
-public sealed class TopUpRequests(long transactionId, long walletId, int paymentMethodId, decimal amount)
+public sealed class TopUpRequests(long transactionId, long walletId, int paymentMethodId, decimal amount, TopUpRequestStatus status = TopUpRequestStatus.PENDING, string? providerReference = null, DateTime? expiresAtUtc = null, DateTime? paidAtUtc = null)
 {
     public long Id { get; private set; }
 
@@ -21,15 +21,15 @@ public sealed class TopUpRequests(long transactionId, long walletId, int payment
 
     [Required]
     [StringLength(20)]
-    public TopUpRequestStatus Status { get; private set; } = TopUpRequestStatus.PENDING;
+    public TopUpRequestStatus Status { get; private set; } = status;
 
     [StringLength(100)]
-    public string? ProviderReference { get; private set; }
+    public string? ProviderReference { get; private set; } = providerReference;
 
     [Required]
-    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow;
-    public DateTime? ExpiresAtUtc { get; private set; }
-    public DateTime? PaidAtUtc { get; private set; }
+    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow.AddHours(7);
+    public DateTime? ExpiresAtUtc { get; private set; } = expiresAtUtc;
+    public DateTime? PaidAtUtc { get; private set; } = paidAtUtc;
 
     // Relationship
     public Transactions Transaction { get; private set; } = null!;

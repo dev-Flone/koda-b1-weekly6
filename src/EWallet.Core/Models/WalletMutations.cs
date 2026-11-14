@@ -3,7 +3,7 @@ using EWallet.Core.Enums;
 
 namespace EWallet.Core.Models;
 
-public class WalletMutations(long transactionId, long walletId, decimal amount, decimal balanceBefore, decimal balanceAfter)
+public sealed class WalletMutations(long transactionId, long walletId, decimal amount, decimal balanceBefore, decimal balanceAfter, WalletMutationDirection direction)
 {
     public long Id { get; private set; }
 
@@ -15,7 +15,7 @@ public class WalletMutations(long transactionId, long walletId, decimal amount, 
 
     [Required]
     [StringLength(3)]
-    public WalletMutationDirection Direction { get; private set; }
+    public WalletMutationDirection Direction { get; private set; } = direction;
 
     [Required]
     public decimal Amount { get; private set; } = amount;
@@ -27,7 +27,7 @@ public class WalletMutations(long transactionId, long walletId, decimal amount, 
     public decimal BalanceAfter { get; private set; } = balanceAfter;
 
     [Required]
-    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow;
+    public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow.AddHours(7);
 
     // Relationship
     public Transactions Transaction { get; private set; } = null!;
