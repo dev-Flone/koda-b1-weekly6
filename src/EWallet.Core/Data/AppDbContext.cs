@@ -42,6 +42,12 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             entity.Property(u => u.PasswordHash).HasMaxLength(500).IsRequired(false);
             entity.Property(u => u.CreatedAtUtc).HasColumnType("datetime2").IsRequired();
             entity.Property(u => u.UpdatedAtUtc).HasColumnType("datetime2").IsRequired(false);
+
+            entity.HasIndex(u => new
+            {
+                u.UserName,
+                u.CreatedAtUtc
+            });
         });
 
         modelBuilder.Entity<Wallets>(entity =>
@@ -69,6 +75,13 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             entity.Property(w => w.RowVersion).IsRowVersion().IsRequired();
             entity.Property(w => w.CreatedAtUtc).HasColumnType("datetime2").IsRequired();
             entity.Property(w => w.UpdatedAtUtc).HasColumnType("datetime2").IsRequired(false);
+
+            entity.HasIndex(w => new
+            {
+                w.UserId,
+                w.WalletNumber,
+                w.CreatedAtUtc
+            }).HasDatabaseName("IX_Wallets_UserId_WalletNumber_CreatedAtUtc");
         });
 
         modelBuilder.Entity<Transactions>(entity =>
@@ -105,6 +118,14 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             entity.Property(t => t.Description).HasMaxLength(255).IsRequired(false);
             entity.Property(t => t.CreatedAtUtc).HasColumnType("datetime2").IsRequired();
             entity.Property(t => t.CompletedAtUtc).HasColumnType("datetime2").IsRequired(false);
+
+            entity.HasIndex(t => new
+            {
+                t.ReferenceNo,
+                t.SenderWalletId,
+                t.ReceiverWalletId,
+                t.CreatedAtUtc
+            }).HasDatabaseName("IX_Transactions_ReferenceNo_SenderWalletId_ReceiverWalletId_CreatedAtUtc");
         });
 
         modelBuilder.Entity<WalletMutations>(entity =>
@@ -135,6 +156,13 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             entity.Property(wm => wm.BalanceBefore).HasPrecision(18, 2).IsRequired();
             entity.Property(wm => wm.BalanceAfter).HasPrecision(18, 2).IsRequired();
             entity.Property(wm => wm.CreatedAtUtc).HasColumnType("datetime2").IsRequired();
+
+            entity.HasIndex(wm => new
+            {
+                wm.TransactionId,
+                wm.WalletId,
+                wm.CreatedAtUtc
+            }).HasDatabaseName("IX_WalletMutations_TransactionId_WalletId_CreatedAtUtc");
         });
 
         modelBuilder.Entity<PaymentMethods>(entity =>
@@ -150,6 +178,13 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             entity.Property(pm => pm.ProviderName).HasMaxLength(100).IsRequired(false);
             entity.Property(pm => pm.IsActive).IsRequired();
             entity.Property(pm => pm.CreatedAtUtc).HasColumnType("datetime2").IsRequired();
+
+            entity.HasIndex(pm => new
+            {
+                pm.Name,
+                pm.IsActive,
+                pm.CreatedAtUtc
+            }).HasDatabaseName("IX_PaymentMethods_Name_IsActive_CreatedAtUtc");
         });
 
         modelBuilder.Entity<TopUpRequests>(entity =>
@@ -187,6 +222,14 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             entity.Property(tr => tr.CreatedAtUtc).HasColumnType("datetime2").IsRequired();
             entity.Property(tr => tr.ExpiresAtUtc).HasColumnType("datetime2");
             entity.Property(tr => tr.PaidAtUtc).HasColumnType("datetime2");
+
+            entity.HasIndex(tr => new
+            {
+                tr.TransactionId,
+                tr.WalletId,
+                tr.PaymentMethodId,
+                tr.CreatedAtUtc
+            }).HasDatabaseName("TopUpRequests_TransactionId_WalletId_PamentMethodId_CreatedAtUtc");
         });
 
         modelBuilder.Entity<AuditLogs>(entity =>
@@ -216,6 +259,13 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
             entity.Property(al => al.Description).HasMaxLength(500).IsRequired(false);
             entity.Property(al => al.CorrelationId).HasMaxLength(100).IsRequired(false);
             entity.Property(al => al.CreatedAtUtc).HasColumnType("datetime2").IsRequired();
+
+            entity.HasIndex(al => new
+            {
+                al.ActorUserId,
+                al.TransactionId,
+                al.CreatedAtUtc
+            }).HasDatabaseName("IX_ActorUserId_TransactionId_CreatedAtUtc");
         });
     }
 }

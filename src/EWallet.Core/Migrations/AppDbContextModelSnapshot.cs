@@ -72,6 +72,9 @@ namespace EWallet.Core.Migrations
 
                     b.HasIndex("TransactionId");
 
+                    b.HasIndex("ActorUserId", "TransactionId", "CreatedAtUtc")
+                        .HasDatabaseName("IX_ActorUserId_TransactionId_CreatedAtUtc");
+
                     b.ToTable("AuditLogs", "dbo", t =>
                         {
                             t.HasCheckConstraint("CK_AuditLogs_Outcome", "[Outcome] IN ('SUCCESS', 'REJECTED', 'FAILED')");
@@ -110,6 +113,9 @@ namespace EWallet.Core.Migrations
 
                     b.HasIndex("Code")
                         .IsUnique();
+
+                    b.HasIndex("Name", "IsActive", "CreatedAtUtc")
+                        .HasDatabaseName("IX_PaymentMethods_Name_IsActive_CreatedAtUtc");
 
                     b.ToTable("PaymentMethods", "dbo", t =>
                         {
@@ -164,6 +170,9 @@ namespace EWallet.Core.Migrations
                         .IsUnique();
 
                     b.HasIndex("WalletId");
+
+                    b.HasIndex("TransactionId", "WalletId", "PaymentMethodId", "CreatedAtUtc")
+                        .HasDatabaseName("TopUpRequests_TransactionId_WalletId_PamentMethodId_CreatedAtUtc");
 
                     b.ToTable("TopUpRequests", "dbo", t =>
                         {
@@ -224,6 +233,9 @@ namespace EWallet.Core.Migrations
                         .IsUnique();
 
                     b.HasIndex("SenderWalletId");
+
+                    b.HasIndex("ReferenceNo", "SenderWalletId", "ReceiverWalletId", "CreatedAtUtc")
+                        .HasDatabaseName("IX_Transactions_ReferenceNo_SenderWalletId_ReceiverWalletId_CreatedAtUtc");
 
                     b.ToTable("Transactions", "dbo", t =>
                         {
@@ -289,6 +301,8 @@ namespace EWallet.Core.Migrations
                     b.HasIndex("UserName")
                         .IsUnique();
 
+                    b.HasIndex("UserName", "CreatedAtUtc");
+
                     b.ToTable("Users", "dbo", t =>
                         {
                             t.HasCheckConstraint("CK_Users_Status", "[Status] IN ('ACTIVE', 'SUSPENDED')");
@@ -334,6 +348,9 @@ namespace EWallet.Core.Migrations
                     b.HasIndex("TransactionId");
 
                     b.HasIndex("WalletId");
+
+                    b.HasIndex("TransactionId", "WalletId", "CreatedAtUtc")
+                        .HasDatabaseName("IX_WalletMutations_TransactionId_WalletId_CreatedAtUtc");
 
                     b.ToTable("WalletMutations", "dbo", t =>
                         {
@@ -387,6 +404,9 @@ namespace EWallet.Core.Migrations
 
                     b.HasIndex("WalletNumber")
                         .IsUnique();
+
+                    b.HasIndex("UserId", "WalletNumber", "CreatedAtUtc")
+                        .HasDatabaseName("IX_Wallets_UserId_WalletNumber_CreatedAtUtc");
 
                     b.ToTable("Wallets", "dbo", t =>
                         {
