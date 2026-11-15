@@ -15,7 +15,9 @@ builder.Services.AddControllers();
 
 // EF-Core
 builder.Services.AddDbContext<AppDbContext>(options => options
-    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    // Build Connection String
+    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("EWallet.Core"))
+    // Seeding Data with UseSeeding and UseSeedingAsync Method
     .UseSeeding((context, _) =>
         {
             UserSeedData.Seed(context);
@@ -44,16 +46,15 @@ builder.Services.AddScoped<IWalletService, WalletService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 // DI Repositories
+// Inject All Repositories
 builder.Services.AddRepositories();
+
 
 var app = builder.Build();
 
 // Database initialization
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await db.Database.MigrateAsync();
-}
+// To Actually run the SeedData
+await app.Services.MigrateDbAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
