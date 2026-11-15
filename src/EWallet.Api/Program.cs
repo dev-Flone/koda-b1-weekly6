@@ -1,5 +1,7 @@
 using EWallet.Api.Handlers;
 using EWallet.Core.DepedencyInjection;
+using EWallet.Core.Services;
+using EWallet.Core.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,9 @@ builder.Services.AddServices();
 
 // Repositories
 builder.Services.AddRepositories();
+
+// Random Wallet Number Generator
+builder.Services.AddSingleton<IWalletNumberGenerator, WalletNumberGenerator>();
 
 var app = builder.Build();
 

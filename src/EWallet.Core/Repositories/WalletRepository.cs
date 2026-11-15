@@ -33,6 +33,11 @@ public class WalletRepository(AppDbContext context) : IWalletRepository
         return await context.Wallets.FirstOrDefaultAsync(w => w.WalletNumber == walletNumber, cancellationToken);
     }
 
+    async Task<List<Wallets>> IWalletRepository.GetByStatus(WalletStatus status, CancellationToken cancellationToken)
+    {
+        return await context.Wallets.Where(w => w.Status == status).ToListAsync(cancellationToken);
+    }
+
 
     // EXISTS
     public async Task<bool> ExistsByWalletNumber(string walletNumber, CancellationToken cancellationToken)

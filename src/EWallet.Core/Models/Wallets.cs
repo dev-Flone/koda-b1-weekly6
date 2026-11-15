@@ -38,4 +38,11 @@ public class Wallets(long userId, string walletNumber, decimal balance)
     public ICollection<Transactions> ReceivedTransactions { get; private set; } = [];
     public ICollection<WalletMutations> WalletMutations { get; private set; } = [];
     public ICollection<TopUpRequests> TopUpRequests { get; private set; } = [];
+
+    // Methods
+    public void UpdateStatus(WalletStatus status)
+    {
+        Status = status;
+        UpdatedAtUtc = DateTime.UtcNow.AddHours(7);
+    }
 }

@@ -1,4 +1,4 @@
-using EWallet.Core.Interfaces.Services;
+using EWallet.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EWallet.Api.Controllers;

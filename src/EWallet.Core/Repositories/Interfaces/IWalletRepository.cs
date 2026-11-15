@@ -9,7 +9,7 @@ public interface IWalletRepository
     Task<Wallets?> GetByIdAsync(long id, CancellationToken cancellationToken);
     Task<Wallets?> GetByUserId(long userId, CancellationToken cancellationToken);
     Task<Wallets?> GetByWalletNumberAsync(string walletNumber, CancellationToken cancellationToken);
-    Task<Wallets?> GetByStatus(WalletStatus status, CancellationToken cancellationToken);
+    Task<List<Wallets>> GetByStatus(WalletStatus status, CancellationToken cancellationToken);
 
     Task<bool> ExistsByWalletNumber(string walletNumber, CancellationToken cancellationToken);
 

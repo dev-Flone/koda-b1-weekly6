@@ -39,6 +39,10 @@ public sealed class UserRepository(AppDbContext context) : IUserRepository
         return await context.Users.AnyAsync(u => u.Email == email, cancellationToken);
     }
 
+    public async Task<bool> ExistsByPhoneAsync(string phone, CancellationToken cancellationToken)
+    {
+        return await context.Users.AnyAsync(u => u.Phone == phone, cancellationToken);
+    }
 
 
     // METHODS

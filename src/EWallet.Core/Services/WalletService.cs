@@ -1,27 +1,78 @@
-using EWallet.Core.Interfaces.Data;
-using EWallet.Core.Repositories.Interfaces;
-using EWallet.Core.Interfaces.Services;
-using EWallet.Core.Models;
-using EWallet.Core.Enums;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+
+
 using EWallet.Core.Data;
+using EWallet.Core.Dtos.Wallets;
+using EWallet.Core.Enums;
+using EWallet.Core.Models;
+using EWallet.Core.Repositories.Interfaces;
+using EWallet.Core.Services.Interfaces;
 
 namespace EWallet.Core.Services;
 
-public class WalletService(IWalletRepository walletRepository, ITransactionRepository transactionRepository, AppDbContext context) : IWalletService
+public class WalletService(AppDbContext context, IWalletRepository repository) : IWalletService
 {
-    private readonly IWalletRepository _walletRepository = walletRepository;
-    private readonly ITransactionRepository _transactionRepository = transactionRepository;
-    private readonly AppDbContext _context = context;
-
-    public Task<Wallets?> GetByUserIdAsync(int userId)
+    public async Task<List<WalletResponseDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var wallets = await repository.GetAllAsync(cancellationToken);
+
+        return [.. wallets.Select(MapToResponse)];
     }
 
-    public Task<bool> TopUpAsync(int userId, decimal amount, string? description)
+    public async Task<WalletResponseDto?> GetByIdAsync(long id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var wallet = await repository.GetByIdAsync(id, cancellationToken);
+
+        return wallet is null ? null : MapToResponse(wallet);
+    }
+
+    public async Task<List<WalletResponseDto>> GetByStatus(WalletStatus status, CancellationToken cancellationToken)
+    {
+        var wallets = await repository.GetByStatus(status, cancellationToken);
+
+        return [.. wallets.Select(MapToResponse)];
+    }
+
+    public async Task<WalletResponseDto?> GetByUserIdAsync(long userId, CancellationToken cancellationToken)
+    {
+        var wallet = await repository.GetByUserId(userId, cancellationToken);
+
+        return wallet is null ? null : MapToResponse(wallet);
+    }
+
+    public async Task<WalletResponseDto?> GetByWalletNumberAsync(string walletNumber, CancellationToken cancellationToken)
+    {
+        var wallet = await repository.GetByWalletNumberAsync(walletNumber, cancellationToken);
+
+        return wallet is null ? null : MapToResponse(wallet);
+    }
+
+    public async Task<WalletResponseDto?> UpdateStatusAsync(long id, WalletStatusUpdateDto walletStatusUpdate, CancellationToken cancellationToken)
+    {
+        var wallet = await repository.GetByIdAsync(id, cancellationToken);
+
+        if (wallet is null) return null;
+
+        wallet.UpdateStatus(walletStatusUpdate.Status);
+
+        repository.Update(wallet);
+
+        await context.SaveChangesAsync(cancellationToken);
+
+        return MapToResponse(wallet);
+    }
+
+    // Methods
+    private static WalletResponseDto MapToResponse(Wallets wallet)
+    {
+        return new WalletResponseDto
+        {
+            Id = wallet.Id,
+            UserId = wallet.UserId,
+            WalletNumber = wallet.WalletNumber,
+            Balance = wallet.Balance,
+            Status = wallet.Status.ToString(),
+            CreatedAtUtc = wallet.CreatedAtUtc,
+            UpdatedAtUtc = wallet.UpdatedAtUtc
+        };
     }
 }

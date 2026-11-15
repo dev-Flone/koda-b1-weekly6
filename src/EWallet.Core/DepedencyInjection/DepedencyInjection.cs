@@ -1,9 +1,9 @@
 using EWallet.Core.Data;
-using EWallet.Core.Interfaces.Services;
 using EWallet.Core.Repositories;
 using EWallet.Core.Repositories.Interfaces;
 using EWallet.Core.Seeding;
 using EWallet.Core.Services;
+using EWallet.Core.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,8 +49,6 @@ public static class DepedencyInjection
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IWalletService, WalletService>();
-        services.AddScoped<ITransactionService, TransactionService>();
 
         return services;
     }

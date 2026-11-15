@@ -2,12 +2,12 @@ namespace EWallet.Core.Dtos.Users;
 
 public sealed record UserResponseDto
 {
-    public long Id { get; private set; }
-    public string UserName { get; private set; } = string.Empty;
-    public string FullName { get; private set; } = string.Empty;
-    public string Email { get; private set; } = string.Empty;
-    public string Phone { get; private set; } = string.Empty;
-    public string Status { get; private set; } = string.Empty;
-    public DateTime CreatedAtUtc { get; private set; }
-    public DateTime? UpdatedAtUtc { get; private set; }
+    public long Id { get; init; }
+    public string UserName { get; init; } = string.Empty;
+    public string FullName { get; init; } = string.Empty;
+    public string Email { get; init; } = string.Empty;
+    public string Phone { get; init; } = string.Empty;
+    public string Status { get; init; } = string.Empty;
+    public DateTime CreatedAtUtc { get; init; }
+    public DateTime? UpdatedAtUtc { get; init; }
 }
