@@ -1,5 +1,4 @@
 using Bogus;
-using EWallet.Core.Data;
 using EWallet.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
