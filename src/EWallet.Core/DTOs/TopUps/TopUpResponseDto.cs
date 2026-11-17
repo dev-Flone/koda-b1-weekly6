@@ -1,15 +1,15 @@
-namespace EWallet.Core.Dtos.TopUp;
+namespace EWallet.Core.Dtos.TopUps;
 
 public sealed record TopUpResponseDto
 {
-    public long Id { get; private set; }
-    public long TransactionId { get; private set; }
-    public long WalletId { get; private set; }
-    public int PaymentMethodId { get; private set; }
-    public decimal Amount { get; private set; }
-    public string Status { get; private set; } = string.Empty;
-    public string? ProviderReference { get; private set; }
-    public DateTime CreatedAtUtc { get; private set; }
-    public DateTime? ExpiresAtUtc { get; private set; }
-    public DateTime? PaidAtUtc { get; private set; }
+    public long Id { get; init; }
+    public long TransactionId { get; init; }
+    public long WalletId { get; init; }
+    public int PaymentMethodId { get; init; }
+    public decimal Amount { get; init; }
+    public string Status { get; init; } = string.Empty;
+    public string? ProviderReference { get; init; }
+    public DateTime CreatedAtUtc { get; init; }
+    public DateTime? ExpiresAtUtc { get; init; }
+    public DateTime? PaidAtUtc { get; init; }
 }

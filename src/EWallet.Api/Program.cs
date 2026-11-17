@@ -1,9 +1,12 @@
+using System.Text.Json.Serialization;
 using EWallet.Api.Handlers;
 using EWallet.Core.DepedencyInjection;
 using EWallet.Core.Services;
 using EWallet.Core.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 // Swagger ApiDocs
 builder.Services.AddSwaggerGen();

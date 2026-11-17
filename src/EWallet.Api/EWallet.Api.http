@@ -10,7 +10,7 @@ GET {{baseUrl}}/api/users
 Accept: application/json
 
 ### 2. Get User By ID
-GET {{baseUrl}}/api/users/2
+GET {{baseUrl}}/api/users/31
 Accept: application/json
 
 ### 3. Create User
@@ -18,20 +18,21 @@ POST {{baseUrl}}/api/users
 Content-Type: application/json
 
 {
-
-  "name": "Dimas",
   "email": "dimas1@gmail.com",
-  "phone": "081234567890"
+  "phone": "081234567890",
+  "fullName": "Dimas",
+  "userName": "DimasNoMercy"
 }
 
 ### 4. Update User
-PUT {{baseUrl}}/api/users/2
+PUT {{baseUrl}}/api/users/31
 Content-Type: application/json
 
 {
-  "name": "Andi",
-  "email": "andid@gmail.com",
-  "phone": "081234567891"
+  "email": "afif@gmail.com",
+  "phone": "081234567891",
+  "fullName": "Afif",
+  "userName": "AfifNoMercy"
 }
 
 
@@ -39,9 +40,32 @@ Content-Type: application/json
 ### WALLETS
 ### ==============================
 
+### Get All Wallet
+GET {{baseUrl}}/api/wallets
+Accept: application/json
+
+### Get By UserId
+GET {{baseUrl}}/api/wallets/users/21
+Accept: application/json
+
+### Update Status
+PATCH  {{baseUrl}}/api/wallets/31/status
+Content-Type: application/json
+
+{
+  "status": "FROZEN"
+}
+
+### Get By Status
+GET {{baseUrl}}/api/wallets/status/frozen
+Accept: application/json
+
+### Get By WalletNumber
+GET {{baseUrl}}/api/wallets/number/WLT-2159775
+Accept: application/json
 
 ### 5. Get Wallet By User ID
-GET {{baseUrl}}/api/wallets/10
+GET {{baseUrl}}/api/wallets/31
 Accept: application/json
 
 ### 6. Top Up Wallet
@@ -66,6 +90,30 @@ Content-Type: application/json
 ### ==============================
 ### TRANSACTIONS
 ### ==============================
+
+### Get All transactions
+GET {{baseUrl}}/api/transaction
+Accept: application/json
+
+### Get By Id
+GET {{baseUrl}}/api/transaction/16
+Accept: application/json
+
+### Get By Reference Number
+GET {{baseUrl}}/api/transaction/reference/SEED-TOPUP-001
+Accept: application/json
+
+### Get By WalletId
+GET {{baseUrl}}/api/transaction/wallet/21
+Accept: application/json
+
+### Get By Status
+GET {{baseUrl}}/api/transaction/status/success
+Accept: application/json
+
+### Get By Type
+GET {{baseUrl}}/api/transaction/type/transfer
+Accept: application/json
 
 ### 8. Transfer
 POST {{baseUrl}}/api/transfers

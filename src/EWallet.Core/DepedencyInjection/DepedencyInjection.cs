@@ -49,6 +49,9 @@ public static class DepedencyInjection
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IWalletService, WalletService>();
+        services.AddScoped<ITransactionService, TransactionService>();
+        services.AddScoped<ITopUpService, TopUpService>();
 
         return services;
     }

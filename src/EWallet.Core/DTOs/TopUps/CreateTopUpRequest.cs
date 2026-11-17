@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace EWallet.Core.Dtos.TopUp;
+namespace EWallet.Core.Dtos.TopUps;
 
 public sealed record CreateTopUpRequest
 {
-    [Required] public long WalletId { get; private set; }
-    [Required] public int PaymentMethod { get; private set; }
-    [Range(typeof(decimal), "0.01", "9999999999999999")] public decimal Amount { get; private set; }
+    [Required] public long WalletId { get; init; }
+    [Range(1, int.MaxValue)] public int PaymentMethodId { get; init; }
+    [Range(typeof(decimal), "0.01", "9999999999999999", ParseLimitsInInvariantCulture = true)] public decimal Amount { get; init; }
 
 }
