@@ -69,13 +69,27 @@ GET {{baseUrl}}/api/wallets/31
 Accept: application/json
 
 ### 6. Top Up Wallet
-POST {{baseUrl}}/api/wallets/10/topups
+POST {{baseUrl}}/api/topup/
 Content-Type: application/json
 
 {
+  "walletId": "22",
   "amount": 1000000,
+  "paymentMethodId": 5,
   "description": "Top up via HTTP request"
 }
+
+### Get By Id
+GET {{baseUrl}}/api/topup/7
+Accept: application/json
+
+### Get All TopUp Requests
+GET {{baseUrl}}/api/topup
+Accept: application/json
+
+### Get By WalletId
+GET {{baseUrl}}/api/topup/wallet/22
+Accept: application/json
 
 ### 7. Top Up - Invalid Amount
 POST {{baseUrl}}/api/wallets/1/topups

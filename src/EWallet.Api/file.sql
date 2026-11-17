@@ -93,3 +93,18 @@ DELETE PaymentMethods;
 DELETE Users;
 
 COMMIT TRANSACTION;
+
+SELECT   Id,
+         Code,
+         Name,
+         IsActive
+FROM     PaymentMethods
+ORDER BY Id;
+
+SELECT   *
+FROM     Transactions
+ORDER BY Id DESC;
+
+SELECT   *
+FROM     TopUpRequests
+ORDER BY Id DESC;

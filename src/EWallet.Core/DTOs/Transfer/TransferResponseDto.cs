@@ -2,13 +2,13 @@ namespace EWallet.Core.Dtos.Transfer;
 
 public sealed record TransferResponseDto
 {
-    public long TransactionId { get; private set; }
-    public string ReferenceNo { get; private set; } = string.Empty;
-    public long SenderWalletId { get; private set; }
-    public long ReceiverWalletId { get; private set; }
-    public decimal Amount { get; private set; }
-    public string Status { get; private set; } = string.Empty;
-    public string? Description { get; private set; }
-    public DateTime CreatedAtUtc { get; private set; }
-    public DateTime? CompletedAtUtc { get; private set; }
+    public long TransactionId { get; init; }
+    public string ReferenceNo { get; init; } = string.Empty;
+    public long SenderWalletId { get; init; }
+    public long ReceiverWalletId { get; init; }
+    public decimal Amount { get; init; }
+    public string Status { get; init; } = string.Empty;
+    public string? Description { get; init; }
+    public DateTime CreatedAtUtc { get; init; }
+    public DateTime? CompletedAtUtc { get; init; }
 }
