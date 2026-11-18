@@ -68,7 +68,12 @@ Accept: application/json
 GET {{baseUrl}}/api/wallets/31
 Accept: application/json
 
-### 6. Top Up Wallet
+
+### ======================
+### TOPUP
+### =====================
+
+### Top Up Wallet
 POST {{baseUrl}}/api/topup/
 Content-Type: application/json
 
@@ -92,7 +97,7 @@ GET {{baseUrl}}/api/topup/wallet/22
 Accept: application/json
 
 ### 7. Top Up - Invalid Amount
-POST {{baseUrl}}/api/wallets/1/topups
+POST {{baseUrl}}/api/topup
 Content-Type: application/json
 
 {
@@ -129,7 +134,13 @@ Accept: application/json
 GET {{baseUrl}}/api/transaction/type/transfer
 Accept: application/json
 
-### 8. Transfer
+### ===========================
+### TRANSFER
+### ===========================
+
+
+
+### Transfer
 POST {{baseUrl}}/api/transfers
 Content-Type: application/json
 
@@ -140,7 +151,7 @@ Content-Type: application/json
   "description": "Transfer to Budi"
 }
 
-### 9. Transfer - Insufficient Balance
+### Transfer - Insufficient Balance
 POST {{baseUrl}}/api/transfers
 Content-Type: application/json
 
@@ -151,7 +162,7 @@ Content-Type: application/json
   "description": "Insufficient balance test"
 }
 
-### 10. Transfer - Invalid Amount
+### Transfer - Invalid Amount
 POST {{baseUrl}}/api/transfers
 Content-Type: application/json
 
@@ -162,6 +173,83 @@ Content-Type: application/json
   "description": "Invalid amount test"
 }
 
-### 11. Get User Transaction History
+### Get User Transaction History
 GET {{baseUrl}}/api/users/2/transactions
+Accept: application/json
+
+### Get All Wallet Mutations
+GET {{baseUrl}}/api/WalletMutation
+Accept: application/json
+
+### Get Wallet Mutation By Id
+GET {{baseUrl}}/api/WalletMutation/1
+Accept: application/json
+
+### Get Wallet Mutations By Wallet Id
+GET {{baseUrl}}/api/WalletMutation/wallet/1
+Accept: application/json
+
+### Get Wallet Mutations By Transaction Id
+GET {{baseUrl}}/api/WalletMutation/transaction/1
+Accept: application/json
+
+### Get Wallet Mutations By Direction IN
+GET {{baseUrl}}/api/WalletMutation/direction/IN
+Accept: application/json
+
+### Get Wallet Mutations By Direction OUT
+GET {{baseUrl}}/api/WalletMutation/direction/OUT
+Accept: application/json
+
+### Get All Payment Methods
+GET {{baseUrl}}/api/PaymentMethod
+Accept: application/json
+
+### Get Active Payment Methods
+GET {{baseUrl}}/api/PaymentMethod/active
+Accept: application/json
+
+### Get Payment Method By Id - Bank Transfer
+GET {{baseUrl}}/api/PaymentMethod/0
+Accept: application/json
+
+### Get Payment Method By Id - QRIS
+GET {{baseUrl}}/api/PaymentMethod/1
+Accept: application/json
+
+### Get Payment Method By Code - Bank Transfer
+GET {{baseUrl}}/api/PaymentMethod/code/BANK_TRANSFER
+Accept: application/json
+
+### Get Payment Method By Code - QRIS
+GET {{baseUrl}}/api/PaymentMethod/code/QRIS
+Accept: application/json
+
+
+### Get All Audit Logs
+GET {{baseUrl}}/api/AuditLog
+Accept: application/json
+
+### Get Audit Log By Id
+GET {{baseUrl}}/api/AuditLog/1
+Accept: application/json
+
+### Get Audit Logs By User Id
+GET {{baseUrl}}/api/AuditLog/user/21
+Accept: application/json
+
+### Get Audit Logs By Transaction Id
+GET {{baseUrl}}/api/AuditLog/transaction/13
+Accept: application/json
+
+### Get Audit Logs By Action
+GET {{baseUrl}}/api/AuditLog/action/TRANSFER
+Accept: application/json
+
+### Get Audit Logs By Entity Type
+GET {{baseUrl}}/api/AuditLog/entity-type/USER
+Accept: application/json
+
+### Get Audit Logs By Outcome
+GET {{baseUrl}}/api/AuditLog/outcome/SUCCESS
 Accept: application/json

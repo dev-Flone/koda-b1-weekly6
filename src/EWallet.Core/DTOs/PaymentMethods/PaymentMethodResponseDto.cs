@@ -8,4 +8,20 @@ public sealed record PaymentMethodResponseDto
     public string? ProviderName { get; private set; }
     public bool IsActive { get; private set; }
     public DateTime CreatedAtUtc { get; private set; }
+
+    public PaymentMethodResponseDto(
+        int id,
+        string code,
+        string name,
+        string? providerName,
+        bool isActive,
+        DateTime createdAtUtc)
+    {
+        Id = id;
+        Code = code;
+        Name = name;
+        ProviderName = providerName;
+        IsActive = isActive;
+        CreatedAtUtc = createdAtUtc;
+    }
 }

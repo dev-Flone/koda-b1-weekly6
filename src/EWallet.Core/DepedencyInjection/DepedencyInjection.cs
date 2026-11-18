@@ -1,4 +1,5 @@
 using EWallet.Core.Data;
+using EWallet.Core.Interfaces;
 using EWallet.Core.Repositories;
 using EWallet.Core.Repositories.Interfaces;
 using EWallet.Core.Seeding;
@@ -52,6 +53,10 @@ public static class DepedencyInjection
         services.AddScoped<IWalletService, WalletService>();
         services.AddScoped<ITransactionService, TransactionService>();
         services.AddScoped<ITopUpService, TopUpService>();
+        services.AddScoped<ITransferService, TransferService>();
+        services.AddScoped<IWalletMutationService, WalletMutationService>();
+        services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+        services.AddScoped<IAuditLogService, AuditLogService>();
 
         return services;
     }
@@ -70,7 +75,6 @@ public static class DepedencyInjection
     {
         UserSeedData.Seed(context);
         WalletSeedData.Seed(context);
-        PaymentMethodSeedData.Seed(context);
         TransactionSeedData.Seed(context);
     }
 
@@ -78,7 +82,6 @@ public static class DepedencyInjection
     {
         await UserSeedData.SeedAsync(context, cancellationToken);
         await WalletSeedData.SeedAsync(context, cancellationToken);
-        await PaymentMethodSeedData.SeedAsync(context, cancellationToken);
         await TransactionSeedData.SeedAsync(context, cancellationToken);
     }
 }

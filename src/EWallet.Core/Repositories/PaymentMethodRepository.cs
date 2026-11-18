@@ -8,7 +8,7 @@ namespace EWallet.Core.Repositories;
 
 public sealed class PaymentMethodRepository(AppDbContext context) : IPaymentMethodRepository
 {
-    public async Task<List<PaymentMethods>> GetActive(CancellationToken cancellationToken)
+    public async Task<List<PaymentMethods>> GetActiveAsync(CancellationToken cancellationToken)
     {
         return await context.PaymentMethods.AsNoTracking().Where(pm => pm.IsActive).ToListAsync(cancellationToken);
     }
@@ -18,7 +18,7 @@ public sealed class PaymentMethodRepository(AppDbContext context) : IPaymentMeth
         return await context.PaymentMethods.AsNoTracking().ToListAsync(cancellationToken);
     }
 
-    public async Task<PaymentMethods?> GetByCode(PaymentMethodCode code, CancellationToken cancellationToken)
+    public async Task<PaymentMethods?> GetByCodeAsync(PaymentMethodCode code, CancellationToken cancellationToken)
     {
         return await context.PaymentMethods.FirstOrDefaultAsync(pm => pm.Code == code, cancellationToken);
     }
@@ -30,7 +30,7 @@ public sealed class PaymentMethodRepository(AppDbContext context) : IPaymentMeth
 
 
     // EXISTS
-    public async Task<bool> ExistsById(int id, CancellationToken cancellationToken)
+    public async Task<bool> ExistsByIdAsync(int id, CancellationToken cancellationToken)
     {
         return await context.PaymentMethods.AnyAsync(pm => pm.Id == id, cancellationToken);
     }

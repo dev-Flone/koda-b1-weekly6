@@ -2,5 +2,6 @@ namespace EWallet.Core.Enums;
 
 public enum PaymentMethodCode
 {
-    BANK_TRANSFER, QRIS
+    BANK_TRANSFER = 0,
+    QRIS = 1
 }

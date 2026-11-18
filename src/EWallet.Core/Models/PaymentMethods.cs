@@ -3,9 +3,9 @@ using EWallet.Core.Enums;
 
 namespace EWallet.Core.Models;
 
-public sealed class PaymentMethods(PaymentMethodCode code, string name, string? providerName, bool isActive)
+public sealed class PaymentMethods(int id, PaymentMethodCode code, string name, string? providerName, bool isActive)
 {
-    public int Id { get; private set; }
+    public int Id { get; private set; } = id;
 
     [StringLength(30)]
     public PaymentMethodCode Code { get; private set; } = code;

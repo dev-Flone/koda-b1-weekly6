@@ -84,7 +84,6 @@ namespace EWallet.Core.Migrations
             modelBuilder.Entity("EWallet.Core.Models.PaymentMethods", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
@@ -120,6 +119,26 @@ namespace EWallet.Core.Migrations
                     b.ToTable("PaymentMethods", "dbo", t =>
                         {
                             t.HasCheckConstraint("CK_PaymentMethods_Code", "[Code] IN ('BANK_TRANSFER', 'QRIS')");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 0,
+                            Code = "BANK_TRANSFER",
+                            CreatedAtUtc = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsActive = true,
+                            Name = "Bank Transfer",
+                            ProviderName = "Bank"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Code = "QRIS",
+                            CreatedAtUtc = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsActive = true,
+                            Name = "QRIS",
+                            ProviderName = "QRIS"
                         });
                 });
 
