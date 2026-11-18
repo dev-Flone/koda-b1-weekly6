@@ -1,3 +1,4 @@
+using EWallet.Core.Dtos.Common;
 using EWallet.Core.Dtos.Transactions;
 using EWallet.Core.Enums;
 
@@ -11,4 +12,5 @@ public interface ITransactionService
     Task<List<TransactionResponseDto>> GetByWalletIdAsync(long walletId, CancellationToken cancellationToken);
     Task<List<TransactionResponseDto>> GetByStatusAsync(TransactionStatus status, CancellationToken cancellationToken);
     Task<List<TransactionResponseDto>> GetByTypeAsync(TransactionType type, CancellationToken cancellationToken);
+    Task<PaginationResponse<TransactionResponseDto>> GetHistoryAsync(TransactionQueryDto query, CancellationToken cancellationToken);
 }

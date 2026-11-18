@@ -478,7 +478,7 @@ public static class TransactionSeedData
             new AuditLogs(
                 senderWallet.UserId,
                 topUpSuccess.Id,
-                AuditLogAction.TOPUP,
+                AuditLogAction.TOPUP_PAID,
                 AuditLogEntityType.TRANSACTION,
                 topUpSuccess.Id.ToString(),
                 AuditLogOutcome.SUCCESS,
@@ -489,7 +489,7 @@ public static class TransactionSeedData
             new AuditLogs(
                 senderWallet.UserId,
                 topUpPending.Id,
-                AuditLogAction.TOPUP,
+                AuditLogAction.TOPUP_PAID,
                 AuditLogEntityType.TRANSACTION,
                 topUpPending.Id.ToString(),
                 AuditLogOutcome.SUCCESS,
@@ -500,7 +500,7 @@ public static class TransactionSeedData
             new AuditLogs(
                 senderWallet.UserId,
                 topUpFailed.Id,
-                AuditLogAction.TOPUP,
+                AuditLogAction.TOPUP_REQUESTED,
                 AuditLogEntityType.TRANSACTION,
                 topUpFailed.Id.ToString(),
                 AuditLogOutcome.FAILED,
@@ -511,7 +511,7 @@ public static class TransactionSeedData
             new AuditLogs(
                 senderWallet.UserId,
                 transferSuccess.Id,
-                AuditLogAction.TRANSFER,
+                AuditLogAction.TRANSFER_CREATED,
                 AuditLogEntityType.TRANSACTION,
                 transferSuccess.Id.ToString(),
                 AuditLogOutcome.SUCCESS,
@@ -522,7 +522,7 @@ public static class TransactionSeedData
             new AuditLogs(
                 senderWallet.UserId,
                 transferFailed.Id,
-                AuditLogAction.TRANSFER,
+                AuditLogAction.TRANSFER_REJECTED,
                 AuditLogEntityType.TRANSACTION,
                 transferFailed.Id.ToString(),
                 AuditLogOutcome.FAILED,

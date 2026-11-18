@@ -147,3 +147,43 @@ ORDER BY Id;
 SELECT *
 FROM   AuditLogs
 WHERE  Action = 'TRANSFER';
+
+SELECT   Action,
+         COUNT(*) AS Total
+FROM     AuditLogs
+GROUP BY Action;
+
+SELECT   Id,
+         Action,
+         Type,
+         Outcome,
+         Description,
+         TransactionId
+FROM     AuditLogs
+ORDER BY Id;
+
+SELECT   Action,
+         COUNT(*) AS Total
+FROM     AuditLogs
+GROUP BY Action;
+
+-- Update Audit log based on new auditType
+BEGIN TRANSACTION;
+
+UPDATE AuditLogs
+SET    Action = CASE Id WHEN 1 THEN 'TOPUP_PAID' WHEN 2 THEN 'TOPUP_REQUESTED' WHEN 3 THEN 'TOPUP_REQUESTED' WHEN 4 THEN 'TRANSFER_CREATED' WHEN 5 THEN 'TRANSFER_REJECTED' END
+WHERE  Id IN (1, 2, 3, 4, 5);
+
+SELECT   Id,
+         Action,
+         Outcome,
+         Description
+FROM     AuditLogs
+ORDER BY Id;
+
+COMMIT TRANSACTION;
+
+SELECT   Action,
+         COUNT(*) AS Total
+FROM     dbo.AuditLogs
+GROUP BY Action;

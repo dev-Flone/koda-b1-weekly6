@@ -86,4 +86,16 @@ public class TransactionController(ITransactionService service) : ControllerBase
             title: $"Wallet with type {type} not found."
         ) : Ok(transaction);
     }
+
+    [HttpGet("history")]
+    public async Task<IActionResult> GetHistory(
+    [FromQuery] TransactionQueryDto query,
+    CancellationToken cancellationToken)
+    {
+        var result = await _service.GetHistoryAsync(
+            query,
+            cancellationToken);
+
+        return Ok(result);
+    }
 }

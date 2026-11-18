@@ -1,5 +1,4 @@
 using EWallet.Core.Data;
-using EWallet.Core.Interfaces;
 using EWallet.Core.Repositories;
 using EWallet.Core.Repositories.Interfaces;
 using EWallet.Core.Seeding;

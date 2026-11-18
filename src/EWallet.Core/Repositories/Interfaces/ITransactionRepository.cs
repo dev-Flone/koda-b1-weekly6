@@ -1,5 +1,8 @@
 using EWallet.Core.Enums;
 using EWallet.Core.Models;
+using EWallet.Core.Dtos.Common;
+using EWallet.Core.Dtos.Transfer;
+using EWallet.Core.Dtos.Transactions;
 
 namespace EWallet.Core.Repositories.Interfaces;
 
@@ -16,4 +19,5 @@ public interface ITransactionRepository
 
     Task AddAsync(Transactions transaction, CancellationToken cancellationToken);
     void Update(Transactions transaction);
+    Task<PaginationResponse<TransactionResponseDto>> GetHistoryAsync(TransactionQueryDto query, CancellationToken cancellationToken);
 }

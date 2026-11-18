@@ -1,5 +1,5 @@
 using EWallet.Core.Enums;
-using EWallet.Core.Interfaces;
+using EWallet.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EWallet.Api.Controllers;
@@ -46,19 +46,18 @@ public sealed class AuditLogController(IAuditLogService auditLogService) : Contr
         return Ok(result);
     }
 
-    // GET: api/AuditLog/action/TRANSFER
-    [HttpGet("action/{action}")]
-    public async Task<IActionResult> GetByAction(AuditLogAction action, CancellationToken cancellationToken)
+    // GET: api/AuditLog/action/TRANSFER_CREATED
+    [HttpGet("action/{actionName}")]
+    public async Task<IActionResult> GetByAction(AuditLogAction actionName, CancellationToken cancellationToken)
     {
-        if (!Enum.IsDefined(action))
+        if (!Enum.IsDefined(actionName))
         {
             return BadRequest(new
             {
-                message = "Invalid audit log action."
+                message = "Invalid audit log action"
             });
         }
-
-        var result = await auditLogService.GetByActionAsync(action, cancellationToken);
+        var result = await auditLogService.GetByActionAsync(actionName, cancellationToken);
 
         return Ok(result);
     }

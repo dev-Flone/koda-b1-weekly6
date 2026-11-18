@@ -1,4 +1,5 @@
 using EWallet.Core.Data;
+using EWallet.Core.Dtos.Common;
 using EWallet.Core.Dtos.Transactions;
 using EWallet.Core.Enums;
 using EWallet.Core.Models;
@@ -7,7 +8,7 @@ using EWallet.Core.Services.Interfaces;
 
 namespace EWallet.Core.Services;
 
-public class TransactionService(ITransactionRepository repository, AppDbContext context) : ITransactionService
+public class TransactionService(ITransactionRepository repository) : ITransactionService
 {
     public async Task<List<TransactionResponseDto>> GetAllAsync(CancellationToken cancellationToken)
     {
@@ -49,6 +50,11 @@ public class TransactionService(ITransactionRepository repository, AppDbContext 
         var transaction = await repository.GetByWalletId(walletId, cancellationToken);
 
         return [.. transaction.Select(MapToResponse)];
+    }
+
+    public async Task<PaginationResponse<TransactionResponseDto>> GetHistoryAsync(TransactionQueryDto query, CancellationToken cancellationToken)
+    {
+        return await repository.GetHistoryAsync(query, cancellationToken);
     }
 
     // Methods

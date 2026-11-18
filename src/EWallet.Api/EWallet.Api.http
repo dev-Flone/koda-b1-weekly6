@@ -243,13 +243,56 @@ GET {{baseUrl}}/api/AuditLog/transaction/13
 Accept: application/json
 
 ### Get Audit Logs By Action
-GET {{baseUrl}}/api/AuditLog/action/TRANSFER
+GET {{baseUrl}}/api/AuditLog/action/TRANSFER_CREATED
 Accept: application/json
 
 ### Get Audit Logs By Entity Type
-GET {{baseUrl}}/api/AuditLog/entity-type/USER
+GET {{baseUrl}}/api/AuditLog/entity-type/transaction
 Accept: application/json
 
 ### Get Audit Logs By Outcome
 GET {{baseUrl}}/api/AuditLog/outcome/SUCCESS
+Accept: application/json
+
+### Get Transaction History
+GET {{baseUrl}}/api/transaction/history
+Accept: application/json
+
+### Search by Reference Number
+GET {{baseUrl}}/api/transaction/history?search=TRX
+Accept: application/json
+
+### Filter by Type
+GET {{baseUrl}}/api/transaction/history?type=TRANSFER
+Accept: application/json
+
+### Filter by Status
+GET {{baseUrl}}/api/transaction/history?status=SUCCESS
+Accept: application/json
+
+### Pagination
+GET {{baseUrl}}/api/transaction/history?page=1&pageSize=5
+Accept: application/json
+
+### Sorting by Amount
+GET {{baseUrl}}/api/transaction/history?sortBy=amount&sortOrder=asc
+Accept: application/json
+
+### Filter by Date Range
+GET {{baseUrl}}/api/transaction/history?startDate=2026-11-01&endDate=2026-11-18
+Accept: application/json
+
+
+
+
+### Test 1 - Get All
+GET {{baseUrl}}/api/AuditLog
+Accept: application/json
+
+### Test 2 - Get By ID
+GET {{baseUrl}}/api/AuditLog/4
+Accept: application/json
+
+### Test 3 - Get By Action
+GET {{baseUrl}}/api/AuditLog/action/TRANSFER_CREATED
 Accept: application/json
