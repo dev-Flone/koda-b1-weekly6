@@ -1,4 +1,3 @@
-using EWallet.Core.Data;
 using EWallet.Core.Dtos.Common;
 using EWallet.Core.Dtos.Transactions;
 using EWallet.Core.Enums;

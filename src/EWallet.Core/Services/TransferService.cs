@@ -80,7 +80,7 @@ public sealed class TransferService(
                 receiver.Id,
                 request.Amount,
                 receiverBalanceBefore,
-                senderBalanceAfter,
+                receiverBalanceAfter,
                 WalletMutationDirection.IN
             );
 
@@ -88,6 +88,8 @@ public sealed class TransferService(
             await _walletMutationRepository.AddAsync(receiverMutation, cancellationToken);
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            await dbTransaction.CommitAsync(cancellationToken);
 
             return MapToResponse(transaction);
         }

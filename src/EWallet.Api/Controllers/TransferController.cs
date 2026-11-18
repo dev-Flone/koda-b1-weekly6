@@ -52,9 +52,7 @@ public class TransferController(ITransferService service) : ControllerBase
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<TransferResponseDto>> CreateAsync(
-        CreateTransferRequestDto request,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<TransferResponseDto>> CreateAsync(CreateTransferRequestDto request, CancellationToken cancellationToken)
     {
         try
         {
@@ -62,8 +60,8 @@ public class TransferController(ITransferService service) : ControllerBase
                 request,
                 cancellationToken);
 
-            return CreatedAtAction(
-                nameof(GetByIdAsync),
+            return CreatedAtRoute(
+                "GetTransferById",
                 new { id = created.TransactionId },
                 created);
         }

@@ -80,7 +80,7 @@ Content-Type: application/json
 {
   "walletId": "22",
   "amount": 1000000,
-  "paymentMethodId": 5,
+  "paymentMethodId": 1,
   "description": "Top up via HTTP request"
 }
 
@@ -137,16 +137,32 @@ Accept: application/json
 ### ===========================
 ### TRANSFER
 ### ===========================
+### 4. Create New Transfer
+POST {{baseUrl}}/api/transfer/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "senderWalletId": 21,
+  "receiverWalletId": 31,
+  "amount": 50000,
+  "description": "Pembayaran makan siang"
+}
 
 
 
 ### Transfer
+GET {{baseUrl}}/api/transfer/
+Accept: application/json
+
+###
 POST {{baseUrl}}/api/transfers
 Content-Type: application/json
+Accept: application/json
 
 {
-  "senderUserId": 1,
-  "receiverUserId": 2,
+  "senderWalletId": 21,
+  "receiverWalletId": 31,
   "amount": 50000,
   "description": "Transfer to Budi"
 }
@@ -296,3 +312,40 @@ Accept: application/json
 ### Test 3 - Get By Action
 GET {{baseUrl}}/api/AuditLog/action/TRANSFER_CREATED
 Accept: application/json
+
+
+### 1. Get All Transfers
+GET {{baseUrl}}
+Accept: application/json
+
+
+
+### 1. Get All Transfers
+GET {{baseUrl}}/api/transfer
+Accept: application/json
+
+###
+
+### 2. Get Transfer by ID
+GET {{baseUrl}}/api/transfer/15
+Accept: application/json
+
+###
+
+### 3. Get Transfers by Wallet ID
+GET {{baseUrl}}/api/transfer/wallet/21
+Accept: application/json
+
+###
+
+### 4. Create New Transfer
+POST {{baseUrl}}/api/transfer/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "fromWalletId": 21,
+  "toWalletId": 31,
+  "amount": 50000,
+  "description": "Pembayaran makan siang"
+}
